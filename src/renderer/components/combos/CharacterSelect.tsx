@@ -119,12 +119,18 @@ export const CharacterSelect = (props: any) => {
     });
   }
 
+  // After picking a character and clicking "Save profile" the initial click
+  // seems to get eaten, requiring the user to have to click twice.
+  // Only the second click actually triggers the save event, and the notice.
+  // But for some reason setting onBlur to undefined fixes this issue and the
+  // first issue no longer gets eaten.
   return (
     <Select
       {...rest}
       width="100%"
       value={newValue}
       onChange={newOnChange}
+      onBlur={undefined}
       options={selectOptions.map(valueToOption)}
       searchable={true}
       components={{ ...components, MultiValueRemove, Option, SingleValue }}
