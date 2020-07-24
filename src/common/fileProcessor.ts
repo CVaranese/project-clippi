@@ -20,6 +20,7 @@ import {
   FrameEntryType,
   forAllPlayerIndices,
   mapFramesToButtonInputs,
+  GameEndMethod,
 } from "@vinceau/slp-realtime";
 import { Observable, from } from "rxjs";
 import { map } from "rxjs/operators";
@@ -33,6 +34,7 @@ export enum FindComboOption {
   COMBOS = "COMBOS",
   CONVERSIONS = "CONVERSIONS",
   BUTTON_INPUTS = "BUTTON_INPUTS",
+  QUIT_OUT = "QUIT_OUT",
 }
 
 const defaultButtonInputOptions: ButtonInputOptions = {
@@ -254,6 +256,17 @@ export class FileProcessor {
         }
         const framesList = Array.from(framesInOrder());
         return this._findButtonInputs(filename, framesList, config as Partial<ButtonInputOptions>);
+      case FindComboOptions.QUIT_OUT:
+        // if game is quitout
+        // return last combo in the game
+        let last_combos = [];
+        if (game.getGameEnd().lrasInitiatorIndex == GameEndMethod.NO_CONTEST){
+          last_combos = myArray.slice(-1);
+        }
+        return from(last_combos.map(({combo}) => ({
+                  path: filename,
+                  combo,
+                })));
     }
   }
 
