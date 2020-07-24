@@ -39,7 +39,7 @@ You'll need the following tools installed:
 Clone the repo and install dependencies:
 
 ```bash
-git clone https://github.com/vinceau/project-clippi
+git clone -b CVaranese-quit-out-finder https://github.com/CVaranese/project-clippi.git
 cd project-clippi
 yarn install
 ```
