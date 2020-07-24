@@ -10,12 +10,14 @@ import { HighlightButtonInputs } from "./HighlightButtonInputs";
 const highlightLabels = {
   [FindComboOption.COMBOS]: "combos",
   [FindComboOption.CONVERSIONS]: "conversions",
+  [FindComboOption.QUIT_OUTS]: "rage quits",
 };
 
 const highlightHints = {
   [FindComboOption.COMBOS]:
     "Stricter conversions, requiring the opponent to be hit again within 45 frames after hit-stun ends",
   [FindComboOption.CONVERSIONS]: "Requires the opponent to be hit again within 45 frames of touching the ground",
+  [FindComboOption.QUIT_OUTS]: "Gets the last conversion in a game where someone quit out",
 };
 
 export const HighlightOptions: React.FC = () => {
@@ -39,6 +41,11 @@ export const HighlightOptions: React.FC = () => {
       key: "buttonInputs",
       value: FindComboOption.BUTTON_INPUTS,
       text: "button combinations",
+    },
+    {
+      key: "quitOuts",
+      value: FindComboOption.QUIT_OUTS,
+      text: "rage quits",
     },
   ];
   const allProfiles = Object.keys(comboProfiles);

@@ -34,7 +34,7 @@ export enum FindComboOption {
   COMBOS = "COMBOS",
   CONVERSIONS = "CONVERSIONS",
   BUTTON_INPUTS = "BUTTON_INPUTS",
-  QUIT_OUT = "QUIT_OUT",
+  QUIT_OUTS = "QUIT_OUTS",
 }
 
 const defaultButtonInputOptions: ButtonInputOptions = {
@@ -256,17 +256,19 @@ export class FileProcessor {
         }
         const framesList = Array.from(framesInOrder());
         return this._findButtonInputs(filename, framesList, config as Partial<ButtonInputOptions>);
-      case FindComboOptions.QUIT_OUT:
+      case FindComboOption.QUIT_OUTS:
         // if game is quitout
         // return last combo in the game
         let last_combos = [];
-        if (game.getGameEnd().lrasInitiatorIndex == GameEndMethod.NO_CONTEST){
-          last_combos = myArray.slice(-1);
+        if (game.getGameEnd().gameEndMethod == GameEndMethod.NO_CONTEST) {
+          last_combos = stats.conversions.map((c) => ({ combo: c, settings })).slice(-1);
         }
-        return from(last_combos.map(({combo}) => ({
-                  path: filename,
-                  combo,
-                })));
+        return from(
+          last_combos.map(({ combo }) => ({
+            path: filename,
+            combo,
+          }))
+        );
     }
   }
 
